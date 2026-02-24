@@ -76,6 +76,10 @@ Then open **http://localhost:8000** in your browser.
 
 > **Note:** The pre-aggregated JSON files are included in the repo, so steps 2–4 are only needed if you want to regenerate from source data.
 
+### OR
+
+Visit **[amish-03.github.io/Formula1](https://amish-03.github.io/Formula1/)**
+
 ## 📈 Data Source
 
 [Kaggle: Formula 1 World Championship (1950–2020)](https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020) — 14 CSV files covering races, results, standings, lap times, pit stops, qualifying, circuits, and more. The dataset has been updated through 2024.
