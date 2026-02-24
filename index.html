@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 Analytics Dashboard | 1950–2024</title>
-    <meta name="description" content="Interactive Formula 1 historical analytics dashboard covering 70+ years of racing data">
+    <title>F1 Analytics Control Center | 1950–2024</title>
+    <meta name="description"
+        content="Futuristic Formula 1 analytics control center — 70+ years of telemetry, standings, and strategy data">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
         <div class="header-brand">
             <div class="f1-logo">F<span>1</span></div>
             <div class="header-text">
-                <h1>Analytics Dashboard</h1>
-                <p>1950 – 2024 · 70+ Years of Racing Data</p>
+                <h1>Analytics Control Center</h1>
+                <div class="header-title-line"></div>
+                <p><span class="live-dot"></span> Telemetry Data · 1950–2024</p>
             </div>
         </div>
         <div class="header-stats" id="headerStats"></div>
@@ -26,23 +33,23 @@
     <!-- Navigation Tabs -->
     <nav class="tabs">
         <button class="tab active" data-tab="championship">
-            <span class="tab-icon">🏆</span>
+            <span class="tab-icon">◈</span>
             <span class="tab-label">Championship Battles</span>
         </button>
         <button class="tab" data-tab="constructors">
-            <span class="tab-icon">🏭</span>
+            <span class="tab-icon">◆</span>
             <span class="tab-label">Constructor Dominance</span>
         </button>
         <button class="tab" data-tab="overtaking">
-            <span class="tab-icon">⚔️</span>
+            <span class="tab-icon">⬡</span>
             <span class="tab-label">Grid vs Race</span>
         </button>
         <button class="tab" data-tab="circuits">
-            <span class="tab-icon">🏁</span>
+            <span class="tab-icon">◎</span>
             <span class="tab-label">Circuit Analysis</span>
         </button>
         <button class="tab" data-tab="pitstops">
-            <span class="tab-icon">🔧</span>
+            <span class="tab-icon">⟐</span>
             <span class="tab-label">Pit Stop Strategy</span>
         </button>
     </nav>
@@ -51,7 +58,7 @@
     <section class="module active" id="mod-championship">
         <div class="module-header">
             <h2>Championship Battle Viewer</h2>
-            <p class="module-desc">Visualize season-level title fights with cumulative points progression</p>
+            <p class="module-desc">Season-level title fights — cumulative points progression and standings analysis</p>
         </div>
         <div class="controls-row">
             <div class="control-group">
@@ -59,7 +66,7 @@
                 <select id="champSeason"></select>
             </div>
             <div class="control-group">
-                <label>Drivers (multi-select)</label>
+                <label>Drivers</label>
                 <div class="multi-select" id="champDriverSelect">
                     <div class="multi-select-display" id="champDriverDisplay">Select drivers...</div>
                     <div class="multi-select-dropdown" id="champDriverDropdown"></div>
@@ -90,7 +97,7 @@
     <section class="module" id="mod-constructors">
         <div class="module-header">
             <h2>Constructor Dominance & Era Analysis</h2>
-            <p class="module-desc">Understand dominance cycles, competitiveness, and how power shifted across eras</p>
+            <p class="module-desc">Power shifts, dominance cycles, and competitive balance across regulatory eras</p>
         </div>
         <div class="controls-row">
             <div class="control-group">
@@ -105,7 +112,7 @@
                 </select>
             </div>
             <div class="control-group">
-                <label>Top Constructors</label>
+                <label>Constructors</label>
                 <select id="constrCount">
                     <option value="5">Top 5</option>
                     <option value="10" selected>Top 10</option>
@@ -134,7 +141,8 @@
     <section class="module" id="mod-overtaking">
         <div class="module-header">
             <h2>Grid vs Race Performance</h2>
-            <p class="module-desc">Measure race craft, position change ability, and overtaking patterns</p>
+            <p class="module-desc">Race craft metrics — position changes, overtaking patterns, and driver capabilities
+            </p>
         </div>
         <div class="controls-row">
             <div class="control-group">
@@ -152,7 +160,7 @@
                 <div id="gridHistogram" class="chart-area"></div>
             </div>
             <div class="chart-card chart-full">
-                <h3>Average Positions Gained (All-Time Top 30)</h3>
+                <h3>Average Positions Gained — All-Time Top 30</h3>
                 <div id="gridBarChart" class="chart-area"></div>
             </div>
         </div>
@@ -162,7 +170,7 @@
     <section class="module" id="mod-circuits">
         <div class="module-header">
             <h2>Circuit & Race Characteristics</h2>
-            <p class="module-desc">Understand track behavior, DNF patterns, and global circuit distribution</p>
+            <p class="module-desc">Global circuit distribution, track behavior analysis, and DNF pattern insights</p>
         </div>
         <div class="charts-grid">
             <div class="chart-card chart-full">
@@ -184,7 +192,8 @@
     <section class="module" id="mod-pitstops">
         <div class="module-header">
             <h2>Pit Stop & Strategy Evolution</h2>
-            <p class="module-desc">Analyze technological and strategic evolution through pit stop data (2011–present)</p>
+            <p class="module-desc">Technological evolution and strategic analysis through pit stop telemetry
+                (2011–present)</p>
         </div>
         <div class="controls-row">
             <div class="control-group">
@@ -214,7 +223,7 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loader">
             <div class="loader-ring"></div>
-            <p>Loading F1 Data...</p>
+            <p>Initializing Telemetry</p>
         </div>
     </div>
 
@@ -222,4 +231,5 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
