@@ -1,0 +1,535 @@
+/* ═══════════════════════════════════════════════════════════════
+   F1 ANALYTICS DASHBOARD — Dark F1 Theme
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+    --bg-primary: #0d0d1a;
+    --bg-secondary: #141428;
+    --bg-card: #1a1a35;
+    --bg-card-hover: #22224a;
+    --border: rgba(255,255,255,0.06);
+    --text-primary: #f0f0f5;
+    --text-secondary: #9999b3;
+    --text-muted: #666680;
+    --f1-red: #e10600;
+    --f1-red-glow: rgba(225,6,0,0.35);
+    --accent-blue: #00bcd4;
+    --accent-gold: #ffc107;
+    --accent-green: #4caf50;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+    --shadow-glow: 0 0 30px var(--f1-red-glow);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+    font-size: 15px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 2rem;
+    background: linear-gradient(135deg, var(--bg-secondary), #1a1035);
+    border-bottom: 2px solid var(--f1-red);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow), 0 2px 20px var(--f1-red-glow);
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.f1-logo {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: var(--text-primary);
+    background: var(--f1-red);
+    padding: 0.2rem 0.6rem 0.2rem 0.5rem;
+    border-radius: 6px;
+    line-height: 1;
+}
+
+.f1-logo span {
+    color: #fff;
+}
+
+.header-text h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.header-text p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.header-stats {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.stat-pill {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.stat-pill .stat-value {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+/* ── TABS ───────────────────────────────────────────────────── */
+.tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 2rem;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 1rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
+    position: relative;
+}
+
+.tab:hover {
+    color: var(--text-secondary);
+    background: rgba(255,255,255,0.02);
+}
+
+.tab.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--f1-red);
+}
+
+.tab.active .tab-icon { transform: scale(1.15); }
+
+.tab-icon {
+    font-size: 1.1rem;
+    transition: transform var(--transition);
+}
+
+/* ── MODULES ────────────────────────────────────────────────── */
+.module {
+    display: none;
+    padding: 1.5rem 2rem 3rem;
+    animation: fadeIn 0.4s ease;
+}
+
+.module.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.module-header {
+    margin-bottom: 1.5rem;
+}
+
+.module-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--text-primary), var(--f1-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.module-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 0.3rem;
+}
+
+/* ── CONTROLS ───────────────────────────────────────────────── */
+.controls-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: flex-end;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.control-group label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+select, input[type="range"] {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 0.5rem 0.8rem;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 160px;
+}
+
+select:hover, select:focus {
+    border-color: rgba(225,6,0,0.4);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(225,6,0,0.1);
+}
+
+select option {
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+}
+
+.btn-accent {
+    background: var(--f1-red);
+    border-color: var(--f1-red);
+    color: #fff;
+}
+
+.btn-accent:hover {
+    background: #c80500;
+    box-shadow: 0 0 15px var(--f1-red-glow);
+}
+
+/* ── MULTI-SELECT ───────────────────────────────────────────── */
+.multi-select {
+    position: relative;
+    min-width: 250px;
+}
+
+.multi-select-display {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 0.5rem 0.8rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.multi-select-display:hover {
+    border-color: rgba(225,6,0,0.4);
+}
+
+.multi-select-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-top: 4px;
+    z-index: 50;
+    box-shadow: var(--shadow);
+}
+
+.multi-select-dropdown.open { display: block; }
+
+.multi-select-dropdown label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: background var(--transition);
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: 400;
+}
+
+.multi-select-dropdown label:hover {
+    background: rgba(255,255,255,0.04);
+    color: var(--text-primary);
+}
+
+.multi-select-dropdown input[type="checkbox"] {
+    accent-color: var(--f1-red);
+    width: 15px;
+    height: 15px;
+}
+
+/* ── CHART GRID ─────────────────────────────────────────────── */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+}
+
+.chart-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    transition: var(--transition);
+}
+
+.chart-card:hover {
+    border-color: rgba(225,6,0,0.15);
+    box-shadow: 0 0 20px rgba(225,6,0,0.05);
+}
+
+.chart-card h3 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.chart-wide { grid-column: span 2; }
+.chart-full { grid-column: 1 / -1; }
+
+.chart-area {
+    width: 100%;
+    min-height: 380px;
+}
+
+.chart-tall {
+    min-height: 500px;
+}
+
+/* ── STANDINGS TABLE ────────────────────────────────────────── */
+.table-area {
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.standings-table th {
+    position: sticky;
+    top: 0;
+    background: var(--bg-card);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.standings-table td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+    color: var(--text-secondary);
+}
+
+.standings-table tr:hover td {
+    background: rgba(255,255,255,0.02);
+    color: var(--text-primary);
+}
+
+.standings-table .pos-1 td:first-child { color: var(--accent-gold); font-weight: 700; }
+.standings-table .pos-2 td:first-child { color: #c0c0c0; font-weight: 700; }
+.standings-table .pos-3 td:first-child { color: #cd7f32; font-weight: 700; }
+
+.driver-code {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+/* ── LOADING ────────────────────────────────────────────────── */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    text-align: center;
+}
+
+.loader-ring {
+    width: 60px;
+    height: 60px;
+    border: 3px solid var(--border);
+    border-top-color: var(--f1-red);
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loader p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* ── SCROLLBAR ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+    .charts-grid { grid-template-columns: 1fr 1fr; }
+    .chart-wide { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+    .header { flex-direction: column; gap: 0.8rem; padding: 1rem; }
+    .header-stats { gap: 0.5rem; flex-wrap: wrap; }
+    .tabs { padding: 0 1rem; }
+    .tab { padding: 0.8rem 1rem; font-size: 0.75rem; }
+    .module { padding: 1rem; }
+    .charts-grid { grid-template-columns: 1fr; }
+    .chart-wide, .chart-full { grid-column: span 1; }
+    .controls-row { flex-direction: column; }
+}
+
+/* ── PLOTLY THEME OVERRIDES ─────────────────────────────────── */
+.js-plotly-plot .plotly .modebar {
+    background: transparent !important;
+}
+
+.js-plotly-plot .plotly .modebar-btn path {
+    fill: var(--text-muted) !important;
+}
+
+.js-plotly-plot .plotly .modebar-btn:hover path {
+    fill: var(--f1-red) !important;
+}
+
+/* ── LEAFLET MAP ────────────────────────────────────────────── */
+.leaflet-container {
+    background: var(--bg-primary) !important;
+    border-radius: var(--radius-sm);
+}
+
+.circuit-popup {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+}
+
+.circuit-popup h4 {
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #1a1a2e;
+}
+
+.circuit-popup .stat {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 2px 0;
+}
+
+.circuit-popup .stat-label {
+    color: #666;
+}
+
+.circuit-popup .stat-val {
+    font-weight: 600;
+    color: #1a1a2e;
+}

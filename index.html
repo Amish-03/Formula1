@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Analytics Dashboard | 1950–2024</title>
+    <meta name="description" content="Interactive Formula 1 historical analytics dashboard covering 70+ years of racing data">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-brand">
+            <div class="f1-logo">F<span>1</span></div>
+            <div class="header-text">
+                <h1>Analytics Dashboard</h1>
+                <p>1950 – 2024 · 70+ Years of Racing Data</p>
+            </div>
+        </div>
+        <div class="header-stats" id="headerStats"></div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs">
+        <button class="tab active" data-tab="championship">
+            <span class="tab-icon">🏆</span>
+            <span class="tab-label">Championship Battles</span>
+        </button>
+        <button class="tab" data-tab="constructors">
+            <span class="tab-icon">🏭</span>
+            <span class="tab-label">Constructor Dominance</span>
+        </button>
+        <button class="tab" data-tab="overtaking">
+            <span class="tab-icon">⚔️</span>
+            <span class="tab-label">Grid vs Race</span>
+        </button>
+        <button class="tab" data-tab="circuits">
+            <span class="tab-icon">🏁</span>
+            <span class="tab-label">Circuit Analysis</span>
+        </button>
+        <button class="tab" data-tab="pitstops">
+            <span class="tab-icon">🔧</span>
+            <span class="tab-label">Pit Stop Strategy</span>
+        </button>
+    </nav>
+
+    <!-- ═══════ MODULE 1: CHAMPIONSHIP BATTLES ═══════ -->
+    <section class="module active" id="mod-championship">
+        <div class="module-header">
+            <h2>Championship Battle Viewer</h2>
+            <p class="module-desc">Visualize season-level title fights with cumulative points progression</p>
+        </div>
+        <div class="controls-row">
+            <div class="control-group">
+                <label>Season</label>
+                <select id="champSeason"></select>
+            </div>
+            <div class="control-group">
+                <label>Drivers (multi-select)</label>
+                <div class="multi-select" id="champDriverSelect">
+                    <div class="multi-select-display" id="champDriverDisplay">Select drivers...</div>
+                    <div class="multi-select-dropdown" id="champDriverDropdown"></div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label>&nbsp;</label>
+                <button class="btn btn-accent" id="champSelectTop5">Top 5</button>
+            </div>
+            <div class="control-group">
+                <label>&nbsp;</label>
+                <button class="btn" id="champSelectAll">All</button>
+            </div>
+        </div>
+        <div class="charts-grid">
+            <div class="chart-card chart-wide">
+                <h3>Cumulative Points</h3>
+                <div id="champPointsChart" class="chart-area"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Championship Standings</h3>
+                <div id="champStandingsTable" class="table-area"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ MODULE 2: CONSTRUCTOR DOMINANCE ═══════ -->
+    <section class="module" id="mod-constructors">
+        <div class="module-header">
+            <h2>Constructor Dominance & Era Analysis</h2>
+            <p class="module-desc">Understand dominance cycles, competitiveness, and how power shifted across eras</p>
+        </div>
+        <div class="controls-row">
+            <div class="control-group">
+                <label>Era</label>
+                <select id="constrEra">
+                    <option value="all">All Years (1950–2024)</option>
+                    <option value="1950-1979">Classic Era (1950–1979)</option>
+                    <option value="1980-1999">Turbo & Aero Era (1980–1999)</option>
+                    <option value="2000-2013">Modern Era (2000–2013)</option>
+                    <option value="2014-2020">Hybrid Era (2014–2020)</option>
+                    <option value="2021-2024">Ground Effect Era (2021–2024)</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Top Constructors</label>
+                <select id="constrCount">
+                    <option value="5">Top 5</option>
+                    <option value="10" selected>Top 10</option>
+                    <option value="15">Top 15</option>
+                    <option value="20">Top 20</option>
+                </select>
+            </div>
+        </div>
+        <div class="charts-grid">
+            <div class="chart-card chart-full">
+                <h3>Points Share Heatmap</h3>
+                <div id="constrHeatmap" class="chart-area chart-tall"></div>
+            </div>
+            <div class="chart-card chart-wide">
+                <h3>Points Share Over Time</h3>
+                <div id="constrTrend" class="chart-area"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Competitive Entropy</h3>
+                <div id="constrEntropy" class="chart-area"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ MODULE 3: GRID VS RACE ═══════ -->
+    <section class="module" id="mod-overtaking">
+        <div class="module-header">
+            <h2>Grid vs Race Performance</h2>
+            <p class="module-desc">Measure race craft, position change ability, and overtaking patterns</p>
+        </div>
+        <div class="controls-row">
+            <div class="control-group">
+                <label>Season</label>
+                <select id="gridSeason"></select>
+            </div>
+        </div>
+        <div class="charts-grid">
+            <div class="chart-card chart-wide">
+                <h3>Grid Position vs Final Position</h3>
+                <div id="gridScatter" class="chart-area"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Positions Gained Distribution</h3>
+                <div id="gridHistogram" class="chart-area"></div>
+            </div>
+            <div class="chart-card chart-full">
+                <h3>Average Positions Gained (All-Time Top 30)</h3>
+                <div id="gridBarChart" class="chart-area"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ MODULE 4: CIRCUIT ANALYSIS ═══════ -->
+    <section class="module" id="mod-circuits">
+        <div class="module-header">
+            <h2>Circuit & Race Characteristics</h2>
+            <p class="module-desc">Understand track behavior, DNF patterns, and global circuit distribution</p>
+        </div>
+        <div class="charts-grid">
+            <div class="chart-card chart-full">
+                <h3>Circuit World Map</h3>
+                <div id="circuitMap" class="chart-area chart-tall"></div>
+            </div>
+            <div class="chart-card chart-wide">
+                <h3>Avg Lap Time vs Lap Time Variance</h3>
+                <div id="circuitScatter" class="chart-area"></div>
+            </div>
+            <div class="chart-card">
+                <h3>DNF Rate by Circuit</h3>
+                <div id="circuitDNF" class="chart-area"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ MODULE 5: PIT STOPS ═══════ -->
+    <section class="module" id="mod-pitstops">
+        <div class="module-header">
+            <h2>Pit Stop & Strategy Evolution</h2>
+            <p class="module-desc">Analyze technological and strategic evolution through pit stop data (2011–present)</p>
+        </div>
+        <div class="controls-row">
+            <div class="control-group">
+                <label>Season</label>
+                <select id="pitSeason">
+                    <option value="all">All Seasons</option>
+                </select>
+            </div>
+        </div>
+        <div class="charts-grid">
+            <div class="chart-card chart-wide">
+                <h3>Median Pit Stop Duration Per Season</h3>
+                <div id="pitTrend" class="chart-area"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Pit Stop Duration Distribution</h3>
+                <div id="pitHistogram" class="chart-area"></div>
+            </div>
+            <div class="chart-card chart-full">
+                <h3>Pit Stop Duration by Constructor</h3>
+                <div id="pitConstructor" class="chart-area"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <p>Loading F1 Data...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
