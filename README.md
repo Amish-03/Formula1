@@ -106,6 +106,6 @@ Visit **[amish-03.github.io/Formula1](https://amish-03.github.io/Formula1/)**
 - [x] Pit stop evolution charts
 - [ ] ML modeling layer (future)
 
----
+## 📄 License
 
-<p align="center">Built with ❤️ and racing data</p>
+This project is open source and available under the [MIT License](LICENSE).
